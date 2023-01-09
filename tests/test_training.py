@@ -8,6 +8,7 @@ import model as Mymodel
 import wandb
 from torch import optim, nn
 from main import wandb_config
+
 @pytest.mark.skipif(not os.path.exists(_PATH_DATA), reason="Data files not found")
 def test_training():
     bs = 64 
