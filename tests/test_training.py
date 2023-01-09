@@ -24,6 +24,7 @@ def test_one_epoch():
     model = Mymodel.MyAwesomeModel()
     
     # Wandb stuff
+    wandb.login()
     wandb.init()
     wandb.watch(model, log_freq=100)
     bs = 64
