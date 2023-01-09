@@ -28,7 +28,7 @@ class MyAwesomeModel(nn.Module):
         x = self.fc2(x)
         return F.log_softmax(x, dim=1)
 
-def train(model, trainloader, testloader, criterion, optimizer=None, epochs=5, print_every=40):
+def train(model, trainloader, testloader, criterion, optimizer=None, epochs=5, print_every=40, wandb_log=False):
     # if optimizer is None:
     #     optimizer = torch.optim.Adam(model.parameters(), lr=1e-2)
     
@@ -67,12 +67,12 @@ def train(model, trainloader, testloader, criterion, optimizer=None, epochs=5, p
                       "Training Loss: {:.3f}.. ".format(running_loss/print_every),
                       "Test Loss: {:.3f}.. ".format(test_loss/len(testloader)),
                       "Test Accuracy: {:.3f}".format(accuracy/len(testloader)))
-                
-                # wandb logging
-                wandb.log({"Training Loss:": (running_loss/print_every),
-                      "Test Loss:": (test_loss/len(testloader)),
-                      "Test Accuracy:": (accuracy/len(testloader))})
-                
+                if wandb_log:
+                    # wandb logging
+                    wandb.log({"Training Loss:": (running_loss/print_every),
+                        "Test Loss:": (test_loss/len(testloader)),
+                        "Test Accuracy:": (accuracy/len(testloader))})
+                    
                 running_loss = 0
                 
                 # Make suredropout and grads are on for training

@@ -35,7 +35,7 @@ def train():
 
     # Own training (The same as the given, since its pretty awesome)
     print("Training...")
-    Mymodel.train(model, trainloader, testloader, criterion, optimizer, epochs)
+    Mymodel.train(model, trainloader, testloader, criterion, optimizer, epochs, wandb_log=True)
 
     # Exporting table to wandb with sampled images, preditions and truths
     wandb_table(model, testloader)
