@@ -16,6 +16,7 @@ def train():
     model = Mymodel.MyAwesomeModel()
 
     # Wandb stuff
+    wandb.login()
     wandb.init()
     wandb.watch(model, log_freq=100)
     bs = wandb.config.batch_size
