@@ -29,8 +29,8 @@ def mnist(path):
 
     # train_path = r"C:\Users\Thor\Documents\dtu_MLops_answers\S5\M15\Data\data_corrupt\corruptmnist\train_"
     # test_path = r"C:\Users\Thor\Documents\dtu_MLops_answers\S5\M15\Data\data_corrupt\corruptmnist\test.npz"
-    train_path = path + r"\train_"
-    test_path = path + r"\test.npz"
+    train_path = path + "/train_"
+    test_path = path + "/test.npz"
     
     train_data = MyDataset(train_path, train=True)
     test_data = MyDataset(test_path, train=False)
