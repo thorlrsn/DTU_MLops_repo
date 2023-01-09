@@ -19,7 +19,8 @@ def test_training():
         # lets check if the data is given in tensor form      
         assert torch.is_tensor(images), "Data was not given in tensor form"
         assert torch.is_tensor(labels), "Data was not given in tensor form"
-
+        
+@pytest.mark.skipif(not os.path.exists(_PATH_DATA), reason="Data files not found")
 def test_one_epoch():
      # Own model
     model = Mymodel.MyAwesomeModel()
