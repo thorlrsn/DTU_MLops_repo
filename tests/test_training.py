@@ -22,11 +22,7 @@ def test_training():
 def test_one_epoch():
      # Own model
     model = Mymodel.MyAwesomeModel()
-    
-    # Wandb stuff
-    wandb.login()
-    wandb.init()
-    wandb.watch(model, log_freq=100)
+
     bs = 64
     epochs = 1
     lr  =  0.001
@@ -38,7 +34,7 @@ def test_one_epoch():
     trainloader = DataLoader(dataset=train_set, batch_size=bs, shuffle=True)
     testloader = DataLoader(dataset=test_set, batch_size=bs, shuffle=True)
     
-    Mymodel.train(model, trainloader, testloader, criterion, optimizer, epochs)
+    Mymodel.train(model, trainloader, testloader, criterion, optimizer, epochs, wandb_log=False)
 
     test_loss, test_acc = Mymodel.validation(model, testloader, criterion)
 
