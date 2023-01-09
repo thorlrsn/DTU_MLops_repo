@@ -5,11 +5,12 @@ from torch.utils.data import Dataset, DataLoader
 import torch
 
 # Paths are messed up so had to add manually, not ideal but works for now
-sys.path.insert(0,r"C:\Users\Thor\Documents\dtu_MLops_answers\S5\M15")
+# sys.path.insert(1,r"\DTU_MLops_repo\data.py")
 ###
 # The paths work correctly when running "pytest .\tests\" from the terminal,
 # it is an internal issue when running individual files
 from data import mnist
+
 from tests import _PATH_DATA
 
 @pytest.mark.skipif(not os.path.exists(_PATH_DATA), reason="Data files not found")
