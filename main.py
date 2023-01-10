@@ -31,8 +31,7 @@ def train():
     train_set, test_set = mnist(_PATH_DATA)
     trainloader = DataLoader(dataset=train_set, batch_size=bs, shuffle=True, pin_memory=True)
     testloader = DataLoader(dataset=test_set, batch_size=bs, shuffle=True, pin_memory=True)
-    # trainloader.to(device)
-    # trainloader.to(device)
+   
     # Given training
     # fc_model.train(model, train_set, test_set, criterion, optimizer, epochs=2)
 
