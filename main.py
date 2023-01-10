@@ -9,12 +9,14 @@ import model as Mymodel
 from tests import _PATH_DATA
 
 def train():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
     # Given model
     # model = fc_model.Network(784, 10, [512, 256, 128])
 
     # Own model
     model = Mymodel.MyAwesomeModel()
-
+    model.to(device)
     # Wandb stuff
     wandb.login()
     wandb.init()
@@ -27,9 +29,10 @@ def train():
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     train_set, test_set = mnist(_PATH_DATA)
-    trainloader = DataLoader(dataset=train_set, batch_size=bs, shuffle=True)
-    testloader = DataLoader(dataset=test_set, batch_size=bs, shuffle=True)
-    
+    trainloader = DataLoader(dataset=train_set, batch_size=bs, shuffle=True, pin_memory=True)
+    testloader = DataLoader(dataset=test_set, batch_size=bs, shuffle=True, pin_memory=True)
+    # trainloader.to(device)
+    # trainloader.to(device)
     # Given training
     # fc_model.train(model, train_set, test_set, criterion, optimizer, epochs=2)
 
@@ -136,7 +139,7 @@ def wandb_config(model):
     return sweep_id
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     # model = load_checkpoint(r"C:\Users\thorl\Documents\DTU\JAN23\dtu_MLops_answers\S4\M13\checkpoint.pth")
     model = Mymodel.MyAwesomeModel()
     sweep_id = wandb_config(model)
