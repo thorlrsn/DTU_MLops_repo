@@ -17,6 +17,7 @@ def train():
     # Own model
     model = Mymodel.MyAwesomeModel()
     model.to(device)
+
     # Wandb stuff
     wandb.login()
     wandb.init()
@@ -88,7 +89,11 @@ def wandb_table(model, testloader):
     for images, labels in testloader:
         images = images.float()
         labels = labels.long()
-        
+
+        if torch.cuda.is_available():
+                images = images.cuda()
+                labels = labels.cuda()
+
         output = model.forward(images)
 
         ps = torch.exp(output)
@@ -108,42 +113,58 @@ def wandb_table(model, testloader):
     
     wandb.log({"Preditions": table})
 
-def wandb_config(model):
-    # Old wandb config
-    # args = {"batch_size": 64,  # try log-spaced values from 1 to 50,000
-    #       "num_workers": 2,  # try 0, 1, and 2
-    #       "pin_memory": False,  # try False and True
-    #       "precision": 32,  # try 16 and 32
-    #       "optimizer": "Adadelta",  # try optim.Adadelta and optim.SGD
-    #       }
-    # wandb.init()
-    # wandb.init(config=args)
-    # wandb.watch(model, log_freq=100)
-
-    sweep_configuration = {
-        'method': 'random',
-        'name': 'sweep',
-        'metric': {'goal': 'maximize', 'name': 'val_acc'},
-        'parameters': 
-        {
-            'batch_size': {'values': [16, 32, 64]},
-            'epochs': {'values': [1, 3, 5]},
-            'lr': {'max': 0.001, 'min': 0.0001}
+def wandb_config(model, sweep=False):
+    if sweep is False:
+        # # Old wandb config
+        # args = {"batch_size": 64,  # try log-spaced values from 1 to 50,000
+        #     "num_workers": 2,  # try 0, 1, and 2
+        #     "pin_memory": False,  # try False and True
+        #     "precision": 32,  # try 16 and 32
+        #     "optimizer": "Adadelta",  # try optim.Adadelta and optim.SGD
+        #     }
+        # wandb.init()
+        # wandb.init(config=args)
+        # wandb.watch(model, log_freq=100)
+        sweep_configuration = {
+            'method': 'random',
+            'name': 'sweep',
+            'metric': {'goal': 'maximize', 'name': 'val_acc'},
+            'parameters': 
+            {
+                'batch_size': {'values': [64]},
+                'epochs': {'values': [5]},
+                'lr': {'max': 0.0001, 'min': 0.0001}
+            }
         }
-    }
 
-    # Initialize sweep by passing in config. (Optional) Provide a name of the project.
-    sweep_id = wandb.sweep(sweep=sweep_configuration)
-    # wandb.init()
+        # Initialize sweep by passing in config. (Optional) Provide a name of the project.
+        sweep_id = wandb.sweep(sweep=sweep_configuration)
+
+    elif sweep is True:
+        sweep_configuration = {
+            'method': 'random',
+            'name': 'sweep',
+            'metric': {'goal': 'maximize', 'name': 'val_acc'},
+            'parameters': 
+            {
+                'batch_size': {'values': [16, 32, 64]},
+                'epochs': {'values': [1, 3, 5]},
+                'lr': {'max': 0.001, 'min': 0.0001}
+            }
+        }
+
+        # Initialize sweep by passing in config. (Optional) Provide a name of the project.
+        sweep_id = wandb.sweep(sweep=sweep_configuration)
+        # wandb.init()
     return sweep_id
 
 
 if __name__ == "__main__":    
-    # model = load_checkpoint(r"C:\Users\thorl\Documents\DTU\JAN23\dtu_MLops_answers\S4\M13\checkpoint.pth")
+    model = load_checkpoint(r"C:\Users\thorl\Documents\DTU\JAN23\dtu_MLops_answers\S4\M13\checkpoint.pth")
     model = Mymodel.MyAwesomeModel()
-    sweep_id = wandb_config(model)
+    sweep_id = wandb_config(model, sweep=False)
     wandb.agent(sweep_id, function=train, count=4)
-    # train()
+    train()
 
     
     
