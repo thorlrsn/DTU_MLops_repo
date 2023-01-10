@@ -43,9 +43,11 @@ def train(model, trainloader, testloader, criterion, optimizer=None, epochs=5, p
         for images, labels in trainloader:
             steps += 1
             images = images.float()
-            
             labels = labels.long()
-
+            if torch.cuda.is_available():
+                images = images.cuda()
+                labels = labels.cuda()
+            
             optimizer.zero_grad()
             
             output = model.forward(images)
@@ -95,6 +97,10 @@ def validation(model, testloader, criterion):
         images = images.float()
         labels = labels.long()
         
+        if torch.cuda.is_available():
+                images = images.cuda()
+                labels = labels.cuda()
+
         output = model.forward(images)
         test_loss += criterion(output, labels).item()
 
