@@ -162,7 +162,7 @@ def wandb_config(model, sweep=False):
 if __name__ == "__main__":    
     # model = load_checkpoint(r"C:\Users\thorl\Documents\DTU\JAN23\dtu_MLops_answers\S4\M13\checkpoint.pth")
     model = Mymodel.MyAwesomeModel()
-    sweep_id = wandb_config(model, sweep=False)
+    sweep_id = wandb_config(model, sweep=True)
     wandb.agent(sweep_id, function=train, count=4)
     train()
 
