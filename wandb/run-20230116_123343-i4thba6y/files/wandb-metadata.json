@@ -1,0 +1,42 @@
+{
+    "os": "Windows-10-10.0.19044-SP0",
+    "python": "3.8.10",
+    "heartbeatAt": "2023-01-16T11:33:44.474657",
+    "startedAt": "2023-01-16T11:33:43.719255",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": ".\\main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/thorlrsn/DTU_MLops_repo",
+        "commit": "e2f1b67c9c8bf5bc11797774017876793d010b4c"
+    },
+    "email": "thorlarsen96@gmail.com",
+    "root": "C:/Users/thorl/Documents/DTU/JAN23/DTU_MLops_repo",
+    "host": "LAPTOP-GGIBG9FB",
+    "username": "thorl",
+    "executable": "C:\\Users\\thorl\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.8_qbz5n2kfra8p0\\python.exe",
+    "cpu_count": 6,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 3301.0,
+        "min": 0.0,
+        "max": 3301.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3301.0,
+            "min": 0.0,
+            "max": 3301.0
+        }
+    ],
+    "disk": {
+        "total": 358.50487899780273,
+        "used": 320.4306640625
+    },
+    "memory": {
+        "total": 13.865959167480469
+    }
+}
